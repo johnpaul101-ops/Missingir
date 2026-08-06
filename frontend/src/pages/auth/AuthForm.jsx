@@ -4,6 +4,7 @@ import { LuEyeClosed } from "react-icons/lu";
 import { useAuth } from "../../hooks/useAuth.jsx";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import socket, { connectSocket } from "../../lib/socket.js";
 
 const AuthForm = ({ type }) => {
   const { login, signup, isLoading } = useAuth();
@@ -38,6 +39,10 @@ const AuthForm = ({ type }) => {
 
     if (!isLogin) {
       const data = signup(payload);
+
+      if (socket.disconnect) {
+        connectSocket();
+      }
 
       toast.promise(data, {
         pending: "Loading...",
