@@ -6,7 +6,7 @@ import UIContext from "../contexts/UIContext.jsx";
 const Navbar = () => {
   const { openSidebar, setOpenSidebar } = useContext(UIContext);
   return (
-    <header className="w-full flex items-center px-5 bg-surface-bg border-border-color border-b h-16">
+    <header className="w-full flex items-center px-5 bg-surface-bg border-border-color border-b h-16 z-30">
       <nav className="flex items-center justify-between gap-10 w-full">
         {openSidebar ? (
           <button
