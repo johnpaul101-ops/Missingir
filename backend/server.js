@@ -16,10 +16,16 @@ dotenv.config();
 const app = express();
 const server = createServer(app);
 const PORT = process.env.PORT;
+const allowedOrigins = [
+  "https://missingir.vercel.app",
+  "http://localhost:5173",
+  "http://localhost:3000",
+];
+
 const io = new Server(server, {
   cors: {
-    origin: true,
-    methods: ["GET", "POST"],
+    origin: allowedOrigins,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
   },
   connectionStateRecovery: {
@@ -30,11 +36,23 @@ const io = new Server(server, {
   pingTimeout: 5000,
 });
 
+app.set("trust proxy", 1);
+
 app.use(express.json());
 app.use(
   cors({
-    origin: true,
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(null, false);
+      }
+    },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
 app.use(cookieParser());
