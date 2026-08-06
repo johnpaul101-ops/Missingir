@@ -19,7 +19,7 @@ export const connectSocket = () => {
     socket.disconnect();
   }
 
-  socket = io(import.meta.env.VITE_API_BASE_URL, {
+  socket = io(import.meta.env.SOCKET_CONNECTION_URL, {
     auth: {
       token,
     },
