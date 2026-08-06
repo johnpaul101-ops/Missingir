@@ -19,13 +19,14 @@ export const connectSocket = () => {
     socket.disconnect();
   }
 
-  socket = io(import.meta.env.SOCKET_CONNECTION_URL, {
+  socket = io(import.meta.env.VITE_SOCKET_CONNECTION_URL, {
     auth: {
       token,
     },
     reconnection: true,
     reconnectionAttempts: Infinity,
     reconnectionDelay: 1000,
+    transports: ["websocket", "polling"],
   });
 
   socket.on("connect", () => {
