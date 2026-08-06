@@ -4,6 +4,7 @@ import { LuEyeClosed } from "react-icons/lu";
 import { useAuth } from "../../hooks/useAuth.jsx";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+
 const AuthForm = ({ type }) => {
   const { login, signup, isLoading } = useAuth();
   const [showPassword, setShowPassword] = useState(false);

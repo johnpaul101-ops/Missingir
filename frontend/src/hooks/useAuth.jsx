@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { createAccount, loginUser } from "../services/authServices";
 import { useNavigate } from "react-router-dom";
-import { connectSocket } from "../lib/socket";
+import socket, { connectSocket } from "../lib/socket";
 
 export const useAuth = () => {
   const [user, setUser] = useState(() => {
@@ -39,6 +39,9 @@ export const useAuth = () => {
       localStorage.setItem("user", JSON.stringify(data.data.user));
       localStorage.setItem("accessToken", data.data.accessToken);
       connectSocket();
+      if (socket.disconnect) {
+        connectSocket();
+      }
       navigate("/");
       return data;
     } catch (error) {

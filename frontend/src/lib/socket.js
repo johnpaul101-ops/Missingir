@@ -105,3 +105,5 @@ export const offReceiveMessageListener = () => {
   if (!socket) return;
   socket.off("receive-message");
 };
+
+export default socket;

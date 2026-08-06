@@ -11,7 +11,23 @@ import { connectSocket } from "./lib/socket.js";
 
 const App = () => {
   useEffect(() => {
-    connectSocket();
+    const token = localStorage.getItem("accessToken");
+
+    if (token) {
+      connectSocket();
+    }
+
+    const handlePageShow = (event) => {
+      if (event.persisted) {
+        connectSocket();
+      }
+    };
+
+    window.addEventListener("pageshow", handlePageShow);
+
+    return () => {
+      window.removeEventListener("pageshow", handlePageShow);
+    };
   }, []);
 
   return (
